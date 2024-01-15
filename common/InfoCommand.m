@@ -19,8 +19,8 @@
            "%d free allocation blocks\n",
            [[vol volumeName] UTF8String],
            htons(vol.mdb->num_files),
-           htons(vol.mdb->file_directory_len), htons(vol.mdb->file_directory_start),
-           htons(vol.mdb->num_allocation_blocks), htons(vol.mdb->allocation_block_start),
+           htons(vol.mdb->file_directory_len), ntohs(vol.mdb->file_directory_start),
+           htons(vol.mdb->num_allocation_blocks), ntohs(vol.mdb->allocation_block_start),
            htons(vol.mdb->num_free_allocation_blocks));
     return YES;
 }

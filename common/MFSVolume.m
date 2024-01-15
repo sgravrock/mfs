@@ -1,6 +1,8 @@
 #import "MFSVolume.h"
 #import "mfs.h"
 
+#define MDB_OFFSET 1024
+
 @interface MFSVolume()
 @property (nonatomic, strong) NSData *data;
 @end;
@@ -14,28 +16,26 @@
     
     if (!data) {
         return nil;
-    } else if (data.length < 400 * 1024) {
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Too small to be an MFS volume" forKey:NSLocalizedDescriptionKey];
-        *error = [NSError errorWithDomain:@"application" code:0 userInfo:userInfo];
-        return nil;
-    }
-
-    MFSVolume *result = [[MFSVolume alloc] initWithData:data];
-    result.data = data;
-    struct mfs_mdb *mdb = result.mdb;
-    
-    if (!(mdb->signature[0] == 0xd2 && mdb->signature[1] == 0xd7)) {
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Not an HFS volume" forKey:NSLocalizedDescriptionKey];
-        *error = [NSError errorWithDomain:@"application" code:0 userInfo:userInfo];
-        return nil;
     }
     
-    return result;
+    return [[MFSVolume alloc] initWithData:data error:error];
 }
 
-- (instancetype)initWithData:(NSData *)data {
+- (instancetype)initWithData:(NSData *)data error:(NSError **)error {
+    if (data.length < 400 * 1024) {
+        *error = [MFSVolume errorWithDescription:@"too small to be an MFS volume"];
+        return nil;
+    }
+    
+    struct mfs_mdb *mdb = (struct mfs_mdb *)(data.bytes + MDB_OFFSET);
+    
+    if (!(mdb->signature[0] == 0xd2 && mdb->signature[1] == 0xd7)) {
+        *error = [MFSVolume errorWithDescription:@"not an MFS volume"];
+        return nil;
+    }
+
     if ((self = [super init])) {
-        _mdb = (struct mfs_mdb *)(data.bytes + 1024);
+        _mdb = mdb;
         [self sanityCheck];
     }
     
@@ -93,6 +93,11 @@
     assert(offsetof(struct mfs_fdb, modification_date) == 46);
     assert(offsetof(struct mfs_fdb, file_name_len) == 50);
     assert(offsetof(struct mfs_fdb, file_name) == 51);
+}
+
++ (NSError *)errorWithDescription:(NSString *)description {
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:description forKey:NSLocalizedDescriptionKey];
+    return [NSError errorWithDomain:@"application" code:0 userInfo:userInfo];
 }
 
 @end

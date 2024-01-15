@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MFSVolume : NSObject
 
 + (instancetype)volumeWithPath:(NSString *)path error:(NSError **)error;
+- (instancetype)initWithData:(NSData *)data error:(NSError **)error;
 
 @property (nonatomic, readonly, assign) struct mfs_mdb *mdb;
 
