@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		AA7F4F4D2B54F827003BAF52 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7F4F4C2B54F827003BAF52 /* main.m */; };
+		AA7F4F552B54F88B003BAF52 /* LsCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7F4F542B54F88B003BAF52 /* LsCommand.m */; };
+		AA7F4F5F2B54FA31003BAF52 /* MFSVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7F4F5E2B54FA31003BAF52 /* MFSVolume.m */; };
+		AA7F4F632B559A5A003BAF52 /* InfoCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7F4F622B559A5A003BAF52 /* InfoCommand.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,14 @@
 /* Begin PBXFileReference section */
 		AA7F4F492B54F827003BAF52 /* mfs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mfs; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA7F4F4C2B54F827003BAF52 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AA7F4F532B54F88B003BAF52 /* LsCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LsCommand.h; sourceTree = "<group>"; };
+		AA7F4F542B54F88B003BAF52 /* LsCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LsCommand.m; sourceTree = "<group>"; };
+		AA7F4F5C2B54F8A5003BAF52 /* Command.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Command.h; sourceTree = "<group>"; };
+		AA7F4F5D2B54FA31003BAF52 /* MFSVolume.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFSVolume.h; sourceTree = "<group>"; };
+		AA7F4F5E2B54FA31003BAF52 /* MFSVolume.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFSVolume.m; sourceTree = "<group>"; };
+		AA7F4F602B54FFAD003BAF52 /* mfs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mfs.h; sourceTree = "<group>"; };
+		AA7F4F612B559A5A003BAF52 /* InfoCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoCommand.h; sourceTree = "<group>"; };
+		AA7F4F622B559A5A003BAF52 /* InfoCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoCommand.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +69,14 @@
 			isa = PBXGroup;
 			children = (
 				AA7F4F4C2B54F827003BAF52 /* main.m */,
+				AA7F4F5C2B54F8A5003BAF52 /* Command.h */,
+				AA7F4F532B54F88B003BAF52 /* LsCommand.h */,
+				AA7F4F542B54F88B003BAF52 /* LsCommand.m */,
+				AA7F4F5D2B54FA31003BAF52 /* MFSVolume.h */,
+				AA7F4F5E2B54FA31003BAF52 /* MFSVolume.m */,
+				AA7F4F602B54FFAD003BAF52 /* mfs.h */,
+				AA7F4F612B559A5A003BAF52 /* InfoCommand.h */,
+				AA7F4F622B559A5A003BAF52 /* InfoCommand.m */,
 			);
 			path = mfs;
 			sourceTree = "<group>";
@@ -119,7 +138,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA7F4F5F2B54FA31003BAF52 /* MFSVolume.m in Sources */,
+				AA7F4F552B54F88B003BAF52 /* LsCommand.m in Sources */,
 				AA7F4F4D2B54F827003BAF52 /* main.m in Sources */,
+				AA7F4F632B559A5A003BAF52 /* InfoCommand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +261,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -247,6 +270,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
