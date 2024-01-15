@@ -6,7 +6,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "mfs.h"
+struct mfs_mdb;
+@class MFSFile;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, assign) struct mfs_mdb *mdb;
 
 - (NSString *)volumeName;
+- (NSArray<MFSFile *> *)files;
 
 @end
 

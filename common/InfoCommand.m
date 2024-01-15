@@ -1,5 +1,6 @@
 #import "InfoCommand.h"
 #import "MFSVolume.h"
+#import "mfs.h"
 
 @implementation InfoCommand
 
@@ -18,10 +19,12 @@
            "%d allocation blocks, starting at %d.\n"
            "%d free allocation blocks\n",
            [[vol volumeName] UTF8String],
-           htons(vol.mdb->num_files),
-           htons(vol.mdb->file_directory_len), ntohs(vol.mdb->file_directory_start),
-           htons(vol.mdb->num_allocation_blocks), ntohs(vol.mdb->allocation_block_start),
-           htons(vol.mdb->num_free_allocation_blocks));
+           __DARWIN_OSSwapInt16(vol.mdb->num_files),
+           __DARWIN_OSSwapInt16(vol.mdb->file_directory_len),
+           __DARWIN_OSSwapInt16(vol.mdb->file_directory_start),
+           __DARWIN_OSSwapInt16(vol.mdb->num_allocation_blocks),
+           __DARWIN_OSSwapInt16(vol.mdb->allocation_block_start),
+           __DARWIN_OSSwapInt16(vol.mdb->num_free_allocation_blocks));
     return YES;
 }
 

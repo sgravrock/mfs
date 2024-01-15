@@ -1,4 +1,5 @@
 #import "MFSVolume.h"
+#import "MFSFile.h"
 #import "mfs.h"
 
 #define MDB_OFFSET 1024
@@ -35,8 +36,8 @@
     }
 
     if ((self = [super init])) {
+        _data = data;
         _mdb = mdb;
-        [self sanityCheck];
     }
     
     return self;
@@ -48,51 +49,52 @@
                                   encoding:NSMacOSRomanStringEncoding];
 }
 
-- (void)sanityCheck {
-    // TODO: move this to a unit test. Assert doesn't run in release builds.
-    // Expected offsets are from Inside Macintosh II-121-II-123
+- (NSArray<MFSFile *> *)files {
+    uint16_t start_block_num = __DARWIN_OSSwapInt16(_mdb->file_directory_start);
+    unsigned char *fd_blocks = (unsigned char *)_data.bytes + MFS_BLOCKSIZE * start_block_num;
+    uint16_t num_files = __DARWIN_OSSwapInt16(_mdb->num_files);
+    uint16_t num_dir_blocks = __DARWIN_OSSwapInt16(_mdb->file_directory_len);
+    NSMutableArray<MFSFile *> *result = [NSMutableArray arrayWithCapacity:num_files];
     
-    // Master Directory Block
-    assert(offsetof(struct mfs_mdb, signature) == 0);
-    assert(offsetof(struct mfs_mdb, creation_date) == 2);
-    assert(offsetof(struct mfs_mdb, last_backup_date) == 6);
-    assert(offsetof(struct mfs_mdb, attrs) == 10);
-    assert(offsetof(struct mfs_mdb, num_files) == 12);
-    assert(offsetof(struct mfs_mdb, file_directory_start) == 14);
-    assert(offsetof(struct mfs_mdb, file_directory_len) == 16);
-    assert(offsetof(struct mfs_mdb, num_allocation_blocks) == 18);
-    assert(offsetof(struct mfs_mdb, allocation_block_size) == 20);
-    assert(offsetof(struct mfs_mdb, clump_size) == 24);
-    assert(offsetof(struct mfs_mdb, allocation_block_start) == 28);
-    assert(offsetof(struct mfs_mdb, next_file_number) == 30);
-    assert(offsetof(struct mfs_mdb, num_free_allocation_blocks) == 34);
-    assert(offsetof(struct mfs_mdb, vol_name_len) == 36);
-    assert(offsetof(struct mfs_mdb, vol_name) == 37);
+    for (int i = 0; i < num_dir_blocks && result.count < num_files; i++) {
+        [self addFilesFromDirectoryBlock:fd_blocks + i * MFS_BLOCKSIZE
+                                 toArray:result
+                                   limit:num_files];
+    }
     
+    return result;
+}
+
+- (void)addFilesFromDirectoryBlock:(unsigned char *)block
+                           toArray:(NSMutableArray<MFSFile *> *)dest
+                             limit:(uint16_t)limit {
+    unsigned char *p = block;
+    unsigned char *end = block + MFS_BLOCKSIZE;
     
-    // File Directory Block
-    assert(offsetof(struct mfs_fdb, flags) == 0);
-    assert(offsetof(struct mfs_fdb, version) == 1);
+    while (dest.count < limit) {
+        struct mfs_fdb *fdb = (struct mfs_fdb *)p;
+
+        // Entries do not span block boundaries.
+        // But since entries are variable length, we might have to look at the
+        // maybe-not-an-entry to figure out whether it exists. Fortunately the
+        // empty space at the end of a directory block appears to always be zero-
+        // filled in practice, although this isn't documented. So we can assume
+        // we've reached dead space if the first byte of the name field would be
+        // in the next block or the name length is zero.
+        if (p + offsetof(struct mfs_fdb, file_name) >= end || fdb->file_name_len == 0) {
+            break;
+        }
+
+        MFSFile *file = [[MFSFile alloc] initWithVolume:self fdb:fdb];
+        [dest addObject: file];
     
-    // Note: offsets of type, creator, finder_flags, icon_position, and folder_number
-    // are not documented in Inside Macintosh.
-    assert(offsetof(struct mfs_fdb, type) == 2);
-    assert(offsetof(struct mfs_fdb, creator) == 6);
-    assert(offsetof(struct mfs_fdb, finder_flags) == 10);
-    assert(offsetof(struct mfs_fdb, icon_position) == 12);
-    assert(offsetof(struct mfs_fdb, folder_number) == 16);
-    
-    assert(offsetof(struct mfs_fdb, file_number) == 18);
-    assert(offsetof(struct mfs_fdb, first_data_fork_allocation_block) == 22);
-    assert(offsetof(struct mfs_fdb, data_fork_size) == 24);
-    assert(offsetof(struct mfs_fdb, data_fork_allocated_space) == 28);
-    assert(offsetof(struct mfs_fdb, first_resource_fork_allocation_block) == 32);
-    assert(offsetof(struct mfs_fdb, resource_fork_size) == 34);
-    assert(offsetof(struct mfs_fdb, resource_fork_allocated_space) == 38);
-    assert(offsetof(struct mfs_fdb, creation_date) == 42);
-    assert(offsetof(struct mfs_fdb, modification_date) == 46);
-    assert(offsetof(struct mfs_fdb, file_name_len) == 50);
-    assert(offsetof(struct mfs_fdb, file_name) == 51);
+        // Entries are variable length and padded to an even number of bytes
+        p = (unsigned char *)&fdb->file_name + fdb->file_name_len;
+        
+        if ((uintptr_t)p % 2 != 0) {
+            p++;
+        }
+    }
 }
 
 + (NSError *)errorWithDescription:(NSString *)description {

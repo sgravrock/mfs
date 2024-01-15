@@ -1,6 +1,14 @@
 // See Inside Macintosh II-119 to II-123,
 // or <https://wiki.osdev.org/MFS> for a quick reference.
 
+// Inside Macintosh describes logical blocks as being 512 bytes plus another
+// 12 bytes that belong to the disk driver. However, it also says that
+// signature ($D2D7, big-endian) is at the start of the master directory block
+// which is logical block 2. In MFS floppy disk images seen in the wild, the
+// signature is always 1024 bytes into the image. It follows that the logical
+// block size is 512 bytes, at least for floppy disks.
+#define MFS_BLOCKSIZE 512
+
 // Signed-ness of fields in on-disk data structures is undocumented.
 // Pascal, the intended lingua franca of Macintosh development at the time,
 // only had signed integers. However, MFS was almost certainly implemented in

@@ -13,7 +13,11 @@
 		AA5AAC032B55B05100513581 /* MFSVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7F4F5E2B54FA31003BAF52 /* MFSVolume.m */; };
 		AA5AAC062B55B07400513581 /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5AABF82B55B04B00513581 /* libcommon.a */; };
 		AA5AAC092B55B07C00513581 /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5AABF82B55B04B00513581 /* libcommon.a */; };
+		AA5AAC0B2B55B20C00513581 /* MFSFileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5AAC0A2B55B20C00513581 /* MFSFileTests.m */; };
+		AA5AAC0E2B55B21300513581 /* MFSFile.h in Headers */ = {isa = PBXBuildFile; fileRef = AA5AAC0C2B55B21300513581 /* MFSFile.h */; };
+		AA5AAC0F2B55B21300513581 /* MFSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5AAC0D2B55B21300513581 /* MFSFile.m */; };
 		AA7F4F4D2B54F827003BAF52 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7F4F4C2B54F827003BAF52 /* main.m */; };
+		AAE5E7922B55C417002E927D /* StructDefinitionSanityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE5E7912B55C417002E927D /* StructDefinitionSanityTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +53,9 @@
 		AA15B8262B559FFD009AC212 /* tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA15B8302B55A042009AC212 /* MFSVolumeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFSVolumeTests.m; sourceTree = "<group>"; };
 		AA5AABF82B55B04B00513581 /* libcommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA5AAC0A2B55B20C00513581 /* MFSFileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFSFileTests.m; sourceTree = "<group>"; };
+		AA5AAC0C2B55B21300513581 /* MFSFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFSFile.h; sourceTree = "<group>"; };
+		AA5AAC0D2B55B21300513581 /* MFSFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFSFile.m; sourceTree = "<group>"; };
 		AA7F4F492B54F827003BAF52 /* mfs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mfs; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA7F4F4C2B54F827003BAF52 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AA7F4F532B54F88B003BAF52 /* LsCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LsCommand.h; sourceTree = "<group>"; };
@@ -59,6 +66,7 @@
 		AA7F4F602B54FFAD003BAF52 /* mfs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mfs.h; sourceTree = "<group>"; };
 		AA7F4F612B559A5A003BAF52 /* InfoCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoCommand.h; sourceTree = "<group>"; };
 		AA7F4F622B559A5A003BAF52 /* InfoCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoCommand.m; sourceTree = "<group>"; };
+		AAE5E7912B55C417002E927D /* StructDefinitionSanityTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StructDefinitionSanityTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +107,8 @@
 			isa = PBXGroup;
 			children = (
 				AA15B8302B55A042009AC212 /* MFSVolumeTests.m */,
+				AA5AAC0A2B55B20C00513581 /* MFSFileTests.m */,
+				AAE5E7912B55C417002E927D /* StructDefinitionSanityTests.m */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -106,14 +116,16 @@
 		AA5AABF92B55B04B00513581 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				AA7F4F602B54FFAD003BAF52 /* mfs.h */,
+				AA7F4F5D2B54FA31003BAF52 /* MFSVolume.h */,
+				AA7F4F5E2B54FA31003BAF52 /* MFSVolume.m */,
+				AA5AAC0C2B55B21300513581 /* MFSFile.h */,
+				AA5AAC0D2B55B21300513581 /* MFSFile.m */,
+				AA7F4F612B559A5A003BAF52 /* InfoCommand.h */,
+				AA7F4F622B559A5A003BAF52 /* InfoCommand.m */,
 				AA7F4F5C2B54F8A5003BAF52 /* Command.h */,
 				AA7F4F532B54F88B003BAF52 /* LsCommand.h */,
 				AA7F4F542B54F88B003BAF52 /* LsCommand.m */,
-				AA7F4F5D2B54FA31003BAF52 /* MFSVolume.h */,
-				AA7F4F5E2B54FA31003BAF52 /* MFSVolume.m */,
-				AA7F4F602B54FFAD003BAF52 /* mfs.h */,
-				AA7F4F612B559A5A003BAF52 /* InfoCommand.h */,
-				AA7F4F622B559A5A003BAF52 /* InfoCommand.m */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -154,6 +166,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA5AAC0E2B55B21300513581 /* MFSFile.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +281,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA5AAC0B2B55B20C00513581 /* MFSFileTests.m in Sources */,
+				AAE5E7922B55C417002E927D /* StructDefinitionSanityTests.m in Sources */,
 				AA15B8312B55A042009AC212 /* MFSVolumeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,6 +293,7 @@
 			files = (
 				AA5AAC032B55B05100513581 /* MFSVolume.m in Sources */,
 				AA5AAC012B55B05100513581 /* InfoCommand.m in Sources */,
+				AA5AAC0F2B55B21300513581 /* MFSFile.m in Sources */,
 				AA5AAC022B55B05100513581 /* LsCommand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
