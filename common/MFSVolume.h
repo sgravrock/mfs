@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 struct mfs_mdb;
-@class MFSFile;
+@class MFSFile, MFSBlockMap;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,6 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)volumeName;
 - (NSArray<MFSFile *> *)files;
+- (MFSFile *)fileWithName:(NSString *)name;
+- (MFSBlockMap *)blockMap;
+- (uint32_t)allocationBlockSize;
+- (const uint8_t *)allocationBlock:(uint16_t)abi;
 
 @end
 

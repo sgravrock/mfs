@@ -1,6 +1,11 @@
 #import <Foundation/Foundation.h>
 #import "InfoCommand.h"
 #import "LsCommand.h"
+#import "GetCommand.h"
+#import "StatCommand.h"
+#import "PrintBlockMapCommand.h"
+#import "CheckBlockMapCommand.h"
+#import "ListBlocksCommand.h"
 #import "MFSVolume.h"
 
 static void usage(const char *progname, NSArray<id<Command>> *cmds);
@@ -12,6 +17,11 @@ int main(int argc, const char * argv[]) {
         NSArray<id<Command>> *cmds = @[
             [[InfoCommand alloc] init],
             [[LsCommand alloc] init],
+            [[GetCommand alloc] init],
+            [[StatCommand alloc] init],
+            [[PrintBlockMapCommand alloc] init],
+            [[CheckBlockMapCommand alloc] init],
+            [[ListBlocksCommand alloc] init]
         ];
         
         if (argc < 3) {

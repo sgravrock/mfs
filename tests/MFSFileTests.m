@@ -1,5 +1,6 @@
 #import <XCTest/XCTest.h>
 #import "MFSFile.h"
+#import "mfs.h"
 
 #define MAX_FDB_SIZE 306
 #define NAME_LENGTH_OFFSET 50

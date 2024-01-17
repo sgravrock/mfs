@@ -2,10 +2,6 @@
 @class MFSVolume;
 struct mfs_fdb;
 
-struct type_or_creator {
-    char bytes[4];
-};
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MFSFile : NSObject
@@ -17,6 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)name;
 - (struct type_or_creator *)type;
 - (struct type_or_creator *)creator;
+- (NSDate *)creationDate;
+- (NSDate *)modificationDate;
+- (NSArray<NSNumber *> *)dataForkAllocationBlockNums;
+- (void)readDataForkWithCallback:(BOOL (^)(const uint8_t *, uint32_t))callback;
 
 @end
 
