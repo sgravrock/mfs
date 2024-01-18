@@ -1,6 +1,7 @@
 #import "Command.h"
 #import "MFSVolume.h"
 #import "MFSFile.h"
+#import "MFSFork.h"
 
 @implementation ListBlocksCommand
 
@@ -37,8 +38,17 @@
 }
 
 - (void)listBlocksForFile:(MFSFile *)file {
-    printf("%s: ", [[file name] UTF8String]);
-    NSArray<NSNumber *> *blockNums = [file dataForkAllocationBlockNums];
+    printf("%s data: ", [[file name] UTF8String]);
+    [self listBlocksForFork:[file dataFork]];
+    
+    if ([file hasResourceFork]) {
+        printf("%s resource: ", [[file name] UTF8String]);
+        [self listBlocksForFork:[file resourceFork]];
+    }
+}
+
+- (void)listBlocksForFork:(MFSFork *)fork {
+    NSArray<NSNumber *> *blockNums = [fork allocationBlockNums];
     
     if (blockNums.count == 0) {
         puts("empty");

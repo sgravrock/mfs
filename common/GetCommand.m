@@ -2,7 +2,7 @@
 #import <sys/xattr.h>
 #import "MFSVolume.h"
 #import "MFSFile.h"
-#import "MFSBlockMap.h"
+#import "MFSFork.h"
 #import "mfs.h"
 
 #define XATTR_FINDERINFO_LENGTH 32 // see ATTR_CMN_FNDRINFO in getattrlist(2)
@@ -40,15 +40,49 @@
         return NO;
     }
     
+    // Copy the data fork even if it's empty. MFS doesn't distinguish between
+    // empty and nonexistent forks, but AFS does. And it requries a file to have
+    // a data fork.
     BOOL ok = [self copyDataForkFrom:srcFile to:destPath textMode:textMode];
     ok = ok && [self copyAttrsFrom:srcFile to:destPath];
     
-    // TODO: copy resource fork
+    if (ok && [srcFile hasResourceFork]) {
+        NSString *destResPath = [NSString stringWithFormat:@"%@/..namedfork/rsrc", destPath];
+        ok = [self copyResourceForkFrom:srcFile to:destResPath];
+    }
     
     return ok;
 }
 
 - (BOOL)copyDataForkFrom:(MFSFile *)srcFile to:(NSString *)destPath textMode:(BOOL)textMode {
+    return [self copyFork:[srcFile dataFork] to:destPath withConversion:^NSData *(NSData *contents) {
+        if (!textMode) {
+            return contents;
+            
+        }
+        
+        NSMutableString *converted = [[NSMutableString alloc] initWithData:contents
+                                                                  encoding:NSMacOSRomanStringEncoding];
+        [converted replaceOccurrencesOfString:@"\r"
+                                   withString:@"\n"
+                                      options:0
+                                        range:NSMakeRange(0, converted.length)];
+        NSData *result = [converted dataUsingEncoding:NSUTF8StringEncoding];
+        
+        if (!result) {
+            fprintf(stderr, "%s does not appear to be a text file\n", [destPath UTF8String]);
+        }
+        
+        return result;
+    }];
+}
+
+- (BOOL)copyResourceForkFrom:(MFSFile *)srcFile to:(NSString *)destPath {
+    return [self copyFork:[srcFile resourceFork] to:destPath withConversion:nil];
+}
+
+- (BOOL)copyFork:(MFSFork *)fork to:(NSString *)destPath withConversion:(NSData * (^)(NSData *))conversion {
+    printf("copyFork:%s\n", [destPath UTF8String]);
     FILE *destFile = fopen([destPath UTF8String], "wxb");
 
     if (!destFile) {
@@ -56,25 +90,17 @@
         return NO;
     }
     
-    NSData *contents = [srcFile dataForkContents];
-    BOOL ok = YES;
+    NSData *contents = [fork contents];
     
-    if (textMode) {
-        NSMutableString *converted = [[NSMutableString alloc] initWithData:contents
-                                                                  encoding:NSMacOSRomanStringEncoding];
-        [converted replaceOccurrencesOfString:@"\r"
-                                   withString:@"\n"
-                                      options:0
-                                        range:NSMakeRange(0, converted.length)];
-        contents = [converted dataUsingEncoding:NSUTF8StringEncoding];
-        
-        if (!contents) {
-            fprintf(stderr, "%s does not appear to be a text file\n", [destPath UTF8String]);
-            ok = NO;
-        }
+    if (conversion) {
+        contents = conversion(contents);
     }
     
-    if (ok) {
+    BOOL ok = YES;
+    
+    if (!contents) {
+        ok = NO;
+    } else if (contents.length > 0) {
         if (fwrite(contents.bytes, contents.length, 1, destFile) != 1) {
             perror([destPath UTF8String]);
             ok = NO;

@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-@class MFSVolume;
+@class MFSVolume, MFSFork;
 struct mfs_fdb;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -15,8 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (struct type_or_creator *)creator;
 - (NSDate *)creationDate;
 - (NSDate *)modificationDate;
-- (NSArray<NSNumber *> *)dataForkAllocationBlockNums;
-- (NSData *)dataForkContents;
+- (MFSFork *)dataFork;
+- (BOOL)hasResourceFork;
+- (MFSFork *)resourceFork;
+
 
 @end
 

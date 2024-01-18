@@ -1,6 +1,7 @@
 #import "MFSFile.h"
 #import "MFSVolume.h"
 #import "MFSBlockMap.h"
+#import "MFSFork.h"
 #import "mfs.h"
 
 // The MFS date epoch, Jan 1 1904, in Unix seconds
@@ -44,56 +45,23 @@
     return [NSDate dateWithTimeIntervalSince1970:EPOCH_OFFSET + __DARWIN_OSSwapInt32(_fdb->modification_date)];
 }
 
-- (NSArray<NSNumber *> *)dataForkAllocationBlockNums {
-    MFSBlockMap *blockMap = [self.vol blockMap];
-    uint32_t nBytesAllocated = __DARWIN_OSSwapInt32(_fdb->data_fork_allocated_space);
-    uint32_t nBlocksAllocated = nBytesAllocated / [self.vol allocationBlockSize];
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:nBlocksAllocated];
-    uint16_t abn = __DARWIN_OSSwapInt16(_fdb->first_data_fork_allocation_block);
-    
-    if (abn == MFS_ALLOCATION_BLOCK_NUM_UNUSED) {
-        // Empty fork
-        return result;
-    }
-
-    while (abn != MFS_ALLOCATION_BLOCK_NUM_EOF) {
-        [result addObject:[NSNumber numberWithUnsignedShort:abn]];
-        abn = [blockMap nextAllocationBlock:abn];
-    }
-    
-    if (result.count != nBlocksAllocated) {
-        fprintf(stderr, "Expected %u allocation blocks but found %lu\n", nBlocksAllocated, (unsigned long)result.count);
-    }
-    
-    return result;
+- (MFSFork *)dataFork {
+    return [[MFSFork alloc] initWithVolume:_vol
+                               logicalSize:__DARWIN_OSSwapInt32(_fdb->data_fork_size)
+                              physicalSize:__DARWIN_OSSwapInt32(_fdb->data_fork_allocated_space)
+                   firstAllocationBlockNum:__DARWIN_OSSwapInt16(_fdb->first_data_fork_allocation_block)];
 }
 
-- (NSData *)dataForkContents {
-    uint32_t len = __DARWIN_OSSwapInt32(_fdb->data_fork_size);
-    uint32_t abSize = [self.vol allocationBlockSize];
-    NSMutableData *result = [NSMutableData dataWithLength:(NSUInteger)len];
-    uint8_t *destp = result.mutableBytes;
-    NSArray<NSNumber *> *allocationBlockNums = [self dataForkAllocationBlockNums];
-    
-    for (uint32_t i = 0; i < allocationBlockNums.count; i++) {
-        uint16_t abn = [allocationBlockNums[i] unsignedShortValue];
-        const uint8_t *ab = [self.vol allocationBlock:abn];
-        uint32_t blocksize;
-        
-        if (i + 1 < allocationBlockNums.count) {
-            blocksize = abSize;
-        } else {
-            // Last allocation block. Truncate to logical EOF.
-            blocksize = __DARWIN_OSSwapInt32(_fdb->data_fork_size) % abSize;
-        }
-        
-        memcpy(destp, ab, blocksize);
-        destp += blocksize;
-    }
-    
-    return result;
+- (BOOL)hasResourceFork {
+    return __DARWIN_OSSwapInt32(_fdb->resource_fork_size) > 0;
 }
 
+- (MFSFork *)resourceFork {
+    return [[MFSFork alloc] initWithVolume:_vol
+                               logicalSize:__DARWIN_OSSwapInt32(_fdb->resource_fork_size)
+                              physicalSize:__DARWIN_OSSwapInt32(_fdb->resource_fork_allocated_space)
+                   firstAllocationBlockNum:__DARWIN_OSSwapInt16(_fdb->first_resource_fork_allocation_block)];
+}
 
 
 @end

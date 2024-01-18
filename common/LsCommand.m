@@ -24,9 +24,15 @@
             name = "(name that can't be converted to Unicode)";
         }
         
-        printf("%s (type=%s, creator=%s)\n", name,
+        printf("%s (type=%s, creator=%s", name,
                [formatTypeOrCreator([file type]) UTF8String],
                [formatTypeOrCreator([file creator]) UTF8String]);
+        
+        if ([file hasResourceFork]) {
+            puts(", res)");
+        } else {
+            puts("");
+        }
     }
     
     return YES;
