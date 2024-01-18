@@ -69,20 +69,17 @@
 }
 
 - (void)readDataForkWithCallback:(BOOL (^)(const uint8_t *, uint32_t))callback {
-    // TODO: use dataForkAllocationBlockNums
     uint32_t abSize = [self.vol allocationBlockSize];
-    uint32_t nBytesAllocated = __DARWIN_OSSwapInt32(_fdb->data_fork_allocated_space);
-    uint32_t nblocks = nBytesAllocated / abSize;
-    MFSBlockMap *blockMap = [self.vol blockMap];
-    uint16_t abn = __DARWIN_OSSwapInt16(_fdb->first_data_fork_allocation_block);
-
-    for (uint32_t i = 0; i < nblocks; i++) {
+    
+    NSArray<NSNumber *> *allocationBlockNums = [self dataForkAllocationBlockNums];
+    
+    for (uint32_t i = 0; i < allocationBlockNums.count; i++) {
+        uint16_t abn = [allocationBlockNums[i] unsignedShortValue];
         const uint8_t *ab = [self.vol allocationBlock:abn];
         uint32_t sz;
         
-        if (i + 1 < nblocks) {
+        if (i + 1 < allocationBlockNums.count) {
             sz = abSize;
-            abn = [blockMap nextAllocationBlock:abn];
         } else {
             // Last allocation block. Truncate to logical EOF.
             sz = __DARWIN_OSSwapInt32(_fdb->data_fork_size) % abSize;
