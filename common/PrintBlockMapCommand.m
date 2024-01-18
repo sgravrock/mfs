@@ -1,4 +1,4 @@
-#import "PrintBlockMapCommand.h"
+#import "Command.h"
 #import "MFSVolume.h"
 #import "MFSBlockMap.h"
 

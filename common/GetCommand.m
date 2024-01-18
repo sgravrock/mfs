@@ -1,4 +1,4 @@
-#import "GetCommand.h"
+#import "Command.h"
 #import "MFSVolume.h"
 #import "MFSFile.h"
 #import "MFSBlockMap.h"

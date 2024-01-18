@@ -1,11 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "InfoCommand.h"
-#import "LsCommand.h"
-#import "GetCommand.h"
-#import "StatCommand.h"
-#import "PrintBlockMapCommand.h"
-#import "CheckBlockMapCommand.h"
-#import "ListBlocksCommand.h"
+#import "Command.h"
 #import "MFSVolume.h"
 
 static void usage(const char *progname, NSArray<id<Command>> *cmds);

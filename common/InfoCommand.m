@@ -1,4 +1,4 @@
-#import "InfoCommand.h"
+#import "Command.h"
 #import "MFSVolume.h"
 #import "mfs.h"
 

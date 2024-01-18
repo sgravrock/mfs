@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		AA15B8312B55A042009AC212 /* MFSVolumeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA15B8302B55A042009AC212 /* MFSVolumeTests.m */; };
-		AA36F09A2B5786CF00B9079A /* ListBlocksCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = AA36F0982B5786CF00B9079A /* ListBlocksCommand.h */; };
 		AA36F09B2B5786CF00B9079A /* ListBlocksCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = AA36F0992B5786CF00B9079A /* ListBlocksCommand.m */; };
 		AA5AAC012B55B05100513581 /* InfoCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7F4F622B559A5A003BAF52 /* InfoCommand.m */; };
 		AA5AAC022B55B05100513581 /* LsCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7F4F542B54F88B003BAF52 /* LsCommand.m */; };
@@ -19,16 +18,12 @@
 		AA5AAC0E2B55B21300513581 /* MFSFile.h in Headers */ = {isa = PBXBuildFile; fileRef = AA5AAC0C2B55B21300513581 /* MFSFile.h */; };
 		AA5AAC0F2B55B21300513581 /* MFSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5AAC0D2B55B21300513581 /* MFSFile.m */; };
 		AA7F4F4D2B54F827003BAF52 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7F4F4C2B54F827003BAF52 /* main.m */; };
-		AADE206D2B56DF0B00F9F8F3 /* PrintBlockMapCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = AADE206B2B56DF0B00F9F8F3 /* PrintBlockMapCommand.h */; };
 		AADE206E2B56DF0B00F9F8F3 /* PrintBlockMapCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = AADE206C2B56DF0B00F9F8F3 /* PrintBlockMapCommand.m */; };
-		AADE20712B56E0DB00F9F8F3 /* StatCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = AADE206F2B56E0DB00F9F8F3 /* StatCommand.h */; };
 		AADE20722B56E0DB00F9F8F3 /* StatCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = AADE20702B56E0DB00F9F8F3 /* StatCommand.m */; };
-		AADE20752B56E18800F9F8F3 /* CheckBlockMapCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = AADE20732B56E18800F9F8F3 /* CheckBlockMapCommand.h */; };
 		AADE20762B56E18800F9F8F3 /* CheckBlockMapCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = AADE20742B56E18800F9F8F3 /* CheckBlockMapCommand.m */; };
 		AAE0E16D2B58DBA7002E5613 /* fmt.h in Headers */ = {isa = PBXBuildFile; fileRef = AAE0E16B2B58DBA7002E5613 /* fmt.h */; };
 		AAE0E16E2B58DBA7002E5613 /* fmt.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE0E16C2B58DBA7002E5613 /* fmt.m */; };
 		AAE5E7922B55C417002E927D /* StructDefinitionSanityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE5E7912B55C417002E927D /* StructDefinitionSanityTests.m */; };
-		AAE5E7952B55D9C9002E927D /* GetCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = AAE5E7932B55D9C9002E927D /* GetCommand.h */; };
 		AAE5E7962B55D9C9002E927D /* GetCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE5E7942B55D9C9002E927D /* GetCommand.m */; };
 		AAE5E7992B55DE7D002E927D /* MFSBlockMap.h in Headers */ = {isa = PBXBuildFile; fileRef = AAE5E7972B55DE7D002E927D /* MFSBlockMap.h */; };
 		AAE5E79A2B55DE7D002E927D /* MFSBlockMap.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE5E7982B55DE7D002E927D /* MFSBlockMap.m */; };
@@ -66,7 +61,6 @@
 /* Begin PBXFileReference section */
 		AA15B8262B559FFD009AC212 /* tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA15B8302B55A042009AC212 /* MFSVolumeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFSVolumeTests.m; sourceTree = "<group>"; };
-		AA36F0982B5786CF00B9079A /* ListBlocksCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListBlocksCommand.h; sourceTree = "<group>"; };
 		AA36F0992B5786CF00B9079A /* ListBlocksCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListBlocksCommand.m; sourceTree = "<group>"; };
 		AA5AABF82B55B04B00513581 /* libcommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5AAC0A2B55B20C00513581 /* MFSFileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFSFileTests.m; sourceTree = "<group>"; };
@@ -74,24 +68,18 @@
 		AA5AAC0D2B55B21300513581 /* MFSFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFSFile.m; sourceTree = "<group>"; };
 		AA7F4F492B54F827003BAF52 /* mfs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mfs; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA7F4F4C2B54F827003BAF52 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		AA7F4F532B54F88B003BAF52 /* LsCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LsCommand.h; sourceTree = "<group>"; };
 		AA7F4F542B54F88B003BAF52 /* LsCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LsCommand.m; sourceTree = "<group>"; };
 		AA7F4F5C2B54F8A5003BAF52 /* Command.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Command.h; sourceTree = "<group>"; };
 		AA7F4F5D2B54FA31003BAF52 /* MFSVolume.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFSVolume.h; sourceTree = "<group>"; };
 		AA7F4F5E2B54FA31003BAF52 /* MFSVolume.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFSVolume.m; sourceTree = "<group>"; };
 		AA7F4F602B54FFAD003BAF52 /* mfs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mfs.h; sourceTree = "<group>"; };
-		AA7F4F612B559A5A003BAF52 /* InfoCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoCommand.h; sourceTree = "<group>"; };
 		AA7F4F622B559A5A003BAF52 /* InfoCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoCommand.m; sourceTree = "<group>"; };
-		AADE206B2B56DF0B00F9F8F3 /* PrintBlockMapCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrintBlockMapCommand.h; sourceTree = "<group>"; };
 		AADE206C2B56DF0B00F9F8F3 /* PrintBlockMapCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrintBlockMapCommand.m; sourceTree = "<group>"; };
-		AADE206F2B56E0DB00F9F8F3 /* StatCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StatCommand.h; sourceTree = "<group>"; };
 		AADE20702B56E0DB00F9F8F3 /* StatCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StatCommand.m; sourceTree = "<group>"; };
-		AADE20732B56E18800F9F8F3 /* CheckBlockMapCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CheckBlockMapCommand.h; sourceTree = "<group>"; };
 		AADE20742B56E18800F9F8F3 /* CheckBlockMapCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CheckBlockMapCommand.m; sourceTree = "<group>"; };
 		AAE0E16B2B58DBA7002E5613 /* fmt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fmt.h; sourceTree = "<group>"; };
 		AAE0E16C2B58DBA7002E5613 /* fmt.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = fmt.m; sourceTree = "<group>"; };
 		AAE5E7912B55C417002E927D /* StructDefinitionSanityTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StructDefinitionSanityTests.m; sourceTree = "<group>"; };
-		AAE5E7932B55D9C9002E927D /* GetCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetCommand.h; sourceTree = "<group>"; };
 		AAE5E7942B55D9C9002E927D /* GetCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetCommand.m; sourceTree = "<group>"; };
 		AAE5E7972B55DE7D002E927D /* MFSBlockMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFSBlockMap.h; sourceTree = "<group>"; };
 		AAE5E7982B55DE7D002E927D /* MFSBlockMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFSBlockMap.m; sourceTree = "<group>"; };
@@ -152,19 +140,12 @@
 				AAE5E7972B55DE7D002E927D /* MFSBlockMap.h */,
 				AAE5E7982B55DE7D002E927D /* MFSBlockMap.m */,
 				AA7F4F5C2B54F8A5003BAF52 /* Command.h */,
-				AA7F4F612B559A5A003BAF52 /* InfoCommand.h */,
 				AA7F4F622B559A5A003BAF52 /* InfoCommand.m */,
-				AA7F4F532B54F88B003BAF52 /* LsCommand.h */,
 				AA7F4F542B54F88B003BAF52 /* LsCommand.m */,
-				AAE5E7932B55D9C9002E927D /* GetCommand.h */,
 				AAE5E7942B55D9C9002E927D /* GetCommand.m */,
-				AADE206B2B56DF0B00F9F8F3 /* PrintBlockMapCommand.h */,
 				AADE206C2B56DF0B00F9F8F3 /* PrintBlockMapCommand.m */,
-				AADE20732B56E18800F9F8F3 /* CheckBlockMapCommand.h */,
 				AADE20742B56E18800F9F8F3 /* CheckBlockMapCommand.m */,
-				AADE206F2B56E0DB00F9F8F3 /* StatCommand.h */,
 				AADE20702B56E0DB00F9F8F3 /* StatCommand.m */,
-				AA36F0982B5786CF00B9079A /* ListBlocksCommand.h */,
 				AA36F0992B5786CF00B9079A /* ListBlocksCommand.m */,
 				AAE0E16B2B58DBA7002E5613 /* fmt.h */,
 				AAE0E16C2B58DBA7002E5613 /* fmt.m */,
@@ -208,14 +189,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AADE20752B56E18800F9F8F3 /* CheckBlockMapCommand.h in Headers */,
-				AA36F09A2B5786CF00B9079A /* ListBlocksCommand.h in Headers */,
 				AAE0E16D2B58DBA7002E5613 /* fmt.h in Headers */,
 				AA5AAC0E2B55B21300513581 /* MFSFile.h in Headers */,
-				AADE206D2B56DF0B00F9F8F3 /* PrintBlockMapCommand.h in Headers */,
 				AAE5E7992B55DE7D002E927D /* MFSBlockMap.h in Headers */,
-				AAE5E7952B55D9C9002E927D /* GetCommand.h in Headers */,
-				AADE20712B56E0DB00F9F8F3 /* StatCommand.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
