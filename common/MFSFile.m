@@ -68,27 +68,30 @@
     return result;
 }
 
-- (void)readDataForkWithCallback:(BOOL (^)(const uint8_t *, uint32_t))callback {
+- (NSData *)dataForkContents {
+    uint32_t len = __DARWIN_OSSwapInt32(_fdb->data_fork_size);
     uint32_t abSize = [self.vol allocationBlockSize];
-    
+    NSMutableData *result = [NSMutableData dataWithLength:(NSUInteger)len];
+    uint8_t *destp = result.mutableBytes;
     NSArray<NSNumber *> *allocationBlockNums = [self dataForkAllocationBlockNums];
     
     for (uint32_t i = 0; i < allocationBlockNums.count; i++) {
         uint16_t abn = [allocationBlockNums[i] unsignedShortValue];
         const uint8_t *ab = [self.vol allocationBlock:abn];
-        uint32_t sz;
+        uint32_t blocksize;
         
         if (i + 1 < allocationBlockNums.count) {
-            sz = abSize;
+            blocksize = abSize;
         } else {
             // Last allocation block. Truncate to logical EOF.
-            sz = __DARWIN_OSSwapInt32(_fdb->data_fork_size) % abSize;
+            blocksize = __DARWIN_OSSwapInt32(_fdb->data_fork_size) % abSize;
         }
         
-        if (!callback(ab, sz)) {
-            break;
-        }
+        memcpy(destp, ab, blocksize);
+        destp += blocksize;
     }
+    
+    return result;
 }
 
 

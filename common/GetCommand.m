@@ -10,12 +10,18 @@
 }
 
 - (nonnull NSString *)usage {
-    return @"get mfs-filename destination-path";
+    return @"get mfs-filename destination-path [--text]";
 }
 
 
 - (BOOL)executeOnVolume:(nonnull MFSVolume *)vol withArgs:(nonnull NSArray<NSString *> *)args {
-    if (args.count != 2) {
+    BOOL textMode;
+    
+    if (args.count == 2) {
+        textMode = NO;
+    } else if (args.count == 3 && [args[2] isEqualToString:@"--text"]) {
+        textMode = YES;
+    } else {
         fprintf(stderr, "%s\n", [[self usage] UTF8String]);
         return NO;
     }
@@ -36,17 +42,31 @@
         return NO;
     }
     
-    __block BOOL ok = YES;
-    [srcFile readDataForkWithCallback:^BOOL(const uint8_t * _Nonnull block, uint32_t blocksz) {
-        if (fwrite(block, blocksz, 1, destFile) != 1) {
+    NSData *contents = [srcFile dataForkContents];
+    BOOL ok = YES;
+    
+    if (textMode) {
+        NSMutableString *converted = [[NSMutableString alloc] initWithData:contents
+                                                                  encoding:NSMacOSRomanStringEncoding];
+        [converted replaceOccurrencesOfString:@"\r"
+                                   withString:@"\n"
+                                      options:0
+                                        range:NSMakeRange(0, converted.length)];
+        contents = [converted dataUsingEncoding:NSUTF8StringEncoding];
+        
+        if (!contents) {
+            fprintf(stderr, "%s does not appear to be a text file\n", [destPath UTF8String]);
+            ok = NO;
+        }
+    }
+    
+    if (ok) {
+        if (fwrite(contents.bytes, contents.length, 1, destFile) != 1) {
             perror([destPath UTF8String]);
             ok = NO;
-            return NO;
         }
-        
-        return YES;
-    }];
-
+    }
+    
     if (fclose(destFile) != 0) {
         perror([destPath UTF8String]);
         return NO;
@@ -56,7 +76,7 @@
     
     // TODO: set type and creator
 
-    return YES;
+    return ok;
 }
 
 @end

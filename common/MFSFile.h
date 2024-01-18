@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDate *)creationDate;
 - (NSDate *)modificationDate;
 - (NSArray<NSNumber *> *)dataForkAllocationBlockNums;
-- (void)readDataForkWithCallback:(BOOL (^)(const uint8_t *, uint32_t))callback;
+- (NSData *)dataForkContents;
 
 @end
 
