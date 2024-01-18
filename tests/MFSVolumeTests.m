@@ -8,6 +8,7 @@
 #define DIR_START_OFFSET 14
 #define DIR_LEN_OFFSET 16
 #define NUM_FILES_OFFSET 12
+#define FLAGS_OFFSET 0
 #define FILE_NAME_LEN_OFFSET 50
 #define FILE_NAME_OFFSET 51
 
@@ -87,6 +88,7 @@
     };
     
     for (int i = 0; i < nfiles; i++) {
+        entries[i][FLAGS_OFFSET] = 0x80; // in use
         size_t len = strlen(names[i]);
         entries[i][FILE_NAME_LEN_OFFSET] = len;
         memcpy(entries[i] + FILE_NAME_OFFSET, names[i], len);

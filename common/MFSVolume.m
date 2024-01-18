@@ -68,23 +68,16 @@
                            toArray:(NSMutableArray<MFSFile *> *)dest
                              limit:(uint16_t)limit {
     unsigned char *p = block;
-    unsigned char *end = block + MFS_BLOCKSIZE;
     
     while (dest.count < limit) {
         struct mfs_fdb *fdb = (struct mfs_fdb *)p;
         
-
-        // Entries do not span block boundaries.
-        // But since entries are variable length, we might have to look at the
-        // maybe-not-an-entry to figure out whether it exists. Fortunately the
-        // empty space at the end of a directory block appears to always be zero-
-        // filled in practice, although this isn't documented. So we can assume
-        // we've reached dead space if the first byte of the name field would be
-        // in the next block or the name length is zero.
-        
-        // TODO: check the flags (whch *are* documented) rather than relying on
-        // zero fill
-        if (p + offsetof(struct mfs_fdb, file_name) >= end || fdb->file_name_len == 0) {
+        // Entries do not span block boundaries. The not-an-entry occupying
+        // the unused space at the end of a block can be recognized because
+        // bit 7 of the flags is set to 0. The entire space tends to be
+        // zero-filled in practice, but checking flag bit 7 is the documented
+        // way to identify these non-entries.
+        if ((fdb->flags & (1 << 7)) == 0) {
             break;
         }
 
