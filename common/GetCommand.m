@@ -1,7 +1,12 @@
 #import "Command.h"
+#import <sys/xattr.h>
 #import "MFSVolume.h"
 #import "MFSFile.h"
 #import "MFSBlockMap.h"
+#import "mfs.h"
+
+#define XATTR_FINDERINFO_LENGTH 32 // see ATTR_CMN_FNDRINFO in getattrlist(2)
+
 
 @implementation GetCommand
 
@@ -35,6 +40,15 @@
         return NO;
     }
     
+    BOOL ok = [self copyDataForkFrom:srcFile to:destPath textMode:textMode];
+    ok = ok && [self copyAttrsFrom:srcFile to:destPath];
+    
+    // TODO: copy resource fork
+    
+    return ok;
+}
+
+- (BOOL)copyDataForkFrom:(MFSFile *)srcFile to:(NSString *)destPath textMode:(BOOL)textMode {
     FILE *destFile = fopen([destPath UTF8String], "wxb");
 
     if (!destFile) {
@@ -71,12 +85,23 @@
         perror([destPath UTF8String]);
         return NO;
     }
-    
-    // TODO: copy resource fork
-    
-    // TODO: set type and creator
 
     return ok;
+}
+
+- (BOOL)copyAttrsFrom:(MFSFile *)srcFile to:(NSString *)destPath {
+    // Set type and creator
+    char attr[XATTR_FINDERINFO_LENGTH];
+    bzero(attr, sizeof(attr));
+    memcpy(attr, srcFile.fdb->type, 4);
+    memcpy(attr + 4, srcFile.fdb->creator, 4);
+    
+    if (setxattr([destPath UTF8String], XATTR_FINDERINFO_NAME, attr, sizeof(attr), 0, XATTR_CREATE) == -1) {
+        perror("setxattr");
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end
