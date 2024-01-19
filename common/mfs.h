@@ -83,18 +83,18 @@
  */
 struct __attribute__((__packed__)) mfs_mdb {
     uint8_t signature[2];           // always 0xD2D7
-    int32_t creation_date;          // seconds since Jan 1 1904
-    int32_t last_backup_date;       // seconds since Jan 1 1904
-    int16_t attrs;
-    int16_t num_files;
-    int16_t file_directory_start;   // in logical blocks
-    int16_t file_directory_len;     // in logical blocks
-    int16_t num_allocation_blocks;
-    int32_t allocation_block_size;  // in bytes
-    int32_t clump_size;             // # bytes to allocate when growing a file
-    int16_t allocation_block_start; // in logical blocks
-    int32_t next_file_number;
-    int16_t num_free_allocation_blocks;
+    uint32_t creation_date;          // seconds since Jan 1 1904
+    uint32_t last_backup_date;       // seconds since Jan 1 1904
+    uint16_t attrs;
+    uint16_t num_files;
+    uint16_t file_directory_start;   // in logical blocks
+    uint16_t file_directory_len;     // in logical blocks
+    uint16_t num_allocation_blocks;
+    uint32_t allocation_block_size;  // in bytes
+    uint32_t clump_size;             // # bytes to allocate when growing a file
+    uint16_t allocation_block_start; // in logical blocks
+    uint32_t next_file_number;
+    uint16_t num_free_allocation_blocks;
     // Volume name is a Pascal string, not a C string. The length is broken out
     // seperately here for convenience. vol_name should not be assumed to be
     // null-terminated.
@@ -164,27 +164,27 @@ struct __attribute__((__packed__)) mfs_fdb {
     char type[4];            // Usually but not necessarily printable
     char creator[4];         // Usually but not necessarily printable
     uint16_t finder_flags;   // Undocumented
-    int32_t icon_position;
+    uint32_t icon_position;
     // The folder number indicates where the Finder will display the file.
     // -2 means desktop, -1 maans trash, 0 means the main volume window,
     // and a positive number identifies a folder.
     int16_t folder_number;
-    int32_t file_number;     // The file's ID
+    uint32_t file_number;     // The file's ID
     
     // Data and resource forks are each described by three fields: the number
     // of the first allocation block, the size of the fork in bytes, and the
     // size of the allocated space in bytes. The size of the allocated space is
     // a multiple of the allocation block size. Zero-length forks are valid and
     // very common.
-    int16_t first_data_fork_allocation_block;
-    int32_t data_fork_size;
-    int32_t data_fork_allocated_space;
-    int16_t first_resource_fork_allocation_block;
-    int32_t resource_fork_size;
-    int32_t resource_fork_allocated_space;
+    uint16_t first_data_fork_allocation_block;
+    uint32_t data_fork_size;
+    uint32_t data_fork_allocated_space;
+    uint16_t first_resource_fork_allocation_block;
+    uint32_t resource_fork_size;
+    uint32_t resource_fork_allocated_space;
     
-    int32_t creation_date;      // seconds since Jan 1 1904
-    int32_t modification_date;  // seconds since Jan 1 1904
+    uint32_t creation_date;      // seconds since Jan 1 1904
+    uint32_t modification_date;  // seconds since Jan 1 1904
     
     // File name is a Pascal string, not a C string. The length is broken out
     // seperately here for convenience. file_name should not be assumed to be

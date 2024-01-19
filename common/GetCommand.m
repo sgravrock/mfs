@@ -82,7 +82,6 @@
 }
 
 - (BOOL)copyFork:(MFSFork *)fork to:(NSString *)destPath withConversion:(NSData * (^)(NSData *))conversion {
-    printf("copyFork:%s\n", [destPath UTF8String]);
     FILE *destFile = fopen([destPath UTF8String], "wxb");
 
     if (!destFile) {
