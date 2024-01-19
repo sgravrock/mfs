@@ -17,6 +17,7 @@
     NSMutableDictionary<NSNumber *, NSNumber *> *backlinks = [NSMutableDictionary dictionary];
     __block BOOL ok = YES;
     __block int32_t minSeen = INT32_MAX, maxSeen = INT32_MIN;
+    __block int numUsedBlocksFound = 0;
     
     [[vol blockMap] enumerate:^(uint16_t abNum, uint16_t next) {
         minSeen = MIN(minSeen, abNum);
@@ -24,6 +25,10 @@
 
         // Unused parts of the block map are zero-filled. 1 indicates the end of the block chain
         // for a file.
+        if (next != 0) {
+            numUsedBlocksFound++;
+        }
+        
         if (next != 0 && next != 1) {
             minSeen = MIN(minSeen, next);
             NSNumber *k = [NSNumber numberWithUnsignedShort:next];
@@ -44,11 +49,9 @@
     
     uint16_t numAbs = __DARWIN_OSSwapInt16(vol.mdb->num_allocation_blocks);
     uint16_t numFreeAbs = __DARWIN_OSSwapInt16(vol.mdb->num_free_allocation_blocks);
-    uint16_t numFiles = __DARWIN_OSSwapInt16(vol.mdb->num_files);
     
-    // TODO also need to account for metadata blocks
-    if (numFreeAbs != numAbs - backlinks.count - numFiles) {
-        printf("Found %lu free allocation blocks but the master directory block says there are %u\n", numAbs - backlinks.count - numFiles, numFreeAbs);
+    if (numFreeAbs != numAbs - numUsedBlocksFound) {
+        printf("Found %d free allocation blocks but the master directory block says there are %u\n", numAbs - numUsedBlocksFound, numFreeAbs);
         ok = NO;
     }
     
