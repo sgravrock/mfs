@@ -1,4 +1,4 @@
-# mfs: copy files from MFS disk images on OS X
+# mfsutil: copy files from MFS disk images on OS X
 
 This program copies files from MFS images. MFS was the original Macintosh
 filesystem. It was quickly superseded by HFS and was only used on 400K floppies
@@ -40,8 +40,8 @@ but a few pages of documentation and a hex editor.
 ## Building
 
 You'll need Xcode. Version 14.2 on Monterey is known to work. Open
-`mfs.xcodeproj` in Xcode and build it (cmd-b or Product-&gt;Build). To find
-the resulting `mfs` binary, select Product-&gt;Show Build Folder in Finder.
+`mfsutil.xcodeproj` in Xcode and build it (cmd-b or Product-&gt;Build). To find
+the resulting `mfsutil` binary, select Product-&gt;Show Build Folder in Finder.
 
 ## Support, or lack thereof
 

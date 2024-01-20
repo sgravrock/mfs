@@ -68,7 +68,7 @@
 		AA5AAC0A2B55B20C00513581 /* MFSFileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFSFileTests.m; sourceTree = "<group>"; };
 		AA5AAC0C2B55B21300513581 /* MFSFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFSFile.h; sourceTree = "<group>"; };
 		AA5AAC0D2B55B21300513581 /* MFSFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFSFile.m; sourceTree = "<group>"; };
-		AA7F4F492B54F827003BAF52 /* mfs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mfs; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA7F4F492B54F827003BAF52 /* mfsutil */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mfsutil; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA7F4F4C2B54F827003BAF52 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AA7F4F542B54F88B003BAF52 /* LsCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LsCommand.m; sourceTree = "<group>"; };
 		AA7F4F5C2B54F8A5003BAF52 /* Command.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Command.h; sourceTree = "<group>"; };
@@ -173,7 +173,7 @@
 		AA7F4F4A2B54F827003BAF52 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AA7F4F492B54F827003BAF52 /* mfs */,
+				AA7F4F492B54F827003BAF52 /* mfsutil */,
 				AA15B8262B559FFD009AC212 /* tests.xctest */,
 				AA5AABF82B55B04B00513581 /* libcommon.a */,
 			);
@@ -255,7 +255,7 @@
 			);
 			name = cli;
 			productName = mfs;
-			productReference = AA7F4F492B54F827003BAF52 /* mfs */;
+			productReference = AA7F4F492B54F827003BAF52 /* mfsutil */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -524,7 +524,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				PRODUCT_NAME = mfs;
+				PRODUCT_NAME = mfsutil;
 			};
 			name = Debug;
 		};
@@ -533,7 +533,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				PRODUCT_NAME = mfs;
+				PRODUCT_NAME = mfsutil;
 			};
 			name = Release;
 		};
