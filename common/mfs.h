@@ -162,13 +162,22 @@ struct __attribute__((__packed__)) mfs_mdb {
  
  So it's likely that there was never a Macintosh that supported non-Roman
  alphabets and used MFS as its primariy filesystem. However, newer machines
- could still write to MFS and would use it when formatting 400K floppies. I
- don't know for sure what would happen if a user of such a machine tried to use
- non-Roman characters in a filename on an MFS volume. But my guess is that the
- filename would've been written to disk as-is, in the machine's character set,
- and then treated as if it was Mac OS Roman for case-insensitive comparison
- purposes. That would give consistent case-folding behavior across all machines
- that a disk was inserted into, at the expense of odd results in some languages.
+ could still write to MFS and would use it when formatting 400K floppies. I've
+ found no documentation of how non-Roman Macs handled this in MFS. However,
+ Technical Note TN1150, which describes the much newer HFS+ filesystem, has
+ this to say about HFS:
+ 
+     "HFS uses 31-byte strings to store file names. HFS does not store any
+     kind of script information with the file name to indicate how it should
+     be interpreted. File names are compared and sorted using a routine that
+     assumes a Roman script, wreaking havoc for names that use some other
+     script (such as Japanese). Worse, this algorithm is buggy, even for Roman
+     scripts. The Finder and other applications interpret the file name based
+     on the script system in use at runtime."
+
+ See <https://developer.apple.com/library/archive/technotes/tn/tn1150.html#HFSPlusBasics>.
+ 
+ It's very likely that filenames in MFS worked the same way.
  
  */
 
