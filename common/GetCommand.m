@@ -41,7 +41,7 @@
     }
     
     // Copy the data fork even if it's empty. MFS doesn't distinguish between
-    // empty and nonexistent forks, but AFS does. And it requries a file to have
+    // empty and nonexistent forks, but APFS does. And it requries a file to have
     // a data fork.
     BOOL ok = [self copyDataForkFrom:srcFile to:destPath textMode:textMode];
     ok = ok && [self copyAttrsFrom:srcFile to:destPath];
@@ -58,7 +58,6 @@
     return [self copyFork:[srcFile dataFork] to:destPath withConversion:^NSData *(NSData *contents) {
         if (!textMode) {
             return contents;
-            
         }
         
         NSMutableString *converted = [[NSMutableString alloc] initWithData:contents
