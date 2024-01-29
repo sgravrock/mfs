@@ -147,14 +147,29 @@ struct __attribute__((__packed__)) mfs_mdb {
  in the directory: deleting a file or shortening its name involves rewriting all
  following FDBs.
  
- The filename encoding is not specified. All of the MFS images I have access to
- appear to use either the Mac OS Roman encoding or something else that's highly
- ASCII-compatible, but it probably varies depending on which international
- version of the system softwar wrote the directory. Filenames are
- case-insensitive: "foo" and "FOO" refer to the same file. Figuring out how
- (or whether) that worked in cases where the same volume was written to by
- computers that used different text encodings is left as an exercise to the
- reader.
+ Filenames are case-insensitive: "foo" and "FOO" refer to the same file. The
+ filename encoding is not specified. All of the MFS images I have access to use
+ either the Mac OS Roman encoding or something else that's very similar. It
+ appears that the Macintosh did not support non-Roman alphabets until shortly
+ after the release of the Mac Plus. For this, see:
+ * Inside Macintosh I-496 which lists only US, UK, French, German, and
+   Italian localizations
+ * Inside Macintosh IV-42 (the Macintosh Plus/512KE supplement) which mentions
+   future support for non-Roman alphabets in the International Utilities Package
+ * https://www.unicode.org/Public/MAPPINGS/VENDORS/APPLE/ARABIC.TXT which dates
+   the Mac OS Arabic character set to 1986-1987. This is the earliest evidence
+   I've found of support for a non-Roman alphabet on the Macintosh.
+ 
+ So it's likely that there was never a Macintosh that supported non-Roman
+ alphabets and used MFS as its primariy filesystem. However, newer machines
+ could still write to MFS and would use it when formatting 400K floppies. I
+ don't know for sure what would happen if a user of such a machine tried to use
+ non-Roman characters in a filename on an MFS volume. But my guess is that the
+ filename would've been written to disk as-is, in the machine's character set,
+ and then treated as if it was Mac OS Roman for case-insensitive comparison
+ purposes. That would give consistent case-folding behavior across all machines
+ that a disk was inserted into, at the expense of odd results in some languages.
+ 
  */
 
 struct __attribute__((__packed__)) mfs_fdb {
