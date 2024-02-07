@@ -14,7 +14,7 @@ floppy disk, with no additional header, container, or encoding. If the `file`
 command reports something including "Macintosh MFS data", it'll probably work.
 If you have a Disk Copy 4.2 image (unlikely, but possible), you'll need to
 strip off the header with a tool like `dd` or
-[undiskcopy](https://github.com/sgravrock/adventofcode/blob/master/2022/pascal/undiskcopy.c).
+[undiskcopy](https://github.com/sgravrock/undiskcopy).
 
 MFS hard disk images might work, but I can't be sure because I've never seen
 one.
