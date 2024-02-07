@@ -54,12 +54,19 @@
  signature (0xD2D7, big-endian) is at the start of the master directory block
  which is logical block 2. In MFS floppy disk images seen in the wild, the
  signature is always 1024 bytes into the image. It follows that the logical
- block size is 512 bytes, at least for floppy disks.
+ block size is 512 bytes, at least for floppy disks. It's likely that disk
+ driver hid the extra 12 bytes at the end of each sector from higher layers.
+ Some sources indicate that the extra 12 bytes contained tags, which were
+ intended to be used to re-create the directory if it was damaged. Tags are
+ not included in raw disk images. Disk Copy 4.2 stores the tags in a separate
+ block at the end of the file, after the raw disk image. The upshot of all
+ this is that software can treat media of any type as if it is a sequence of
+ consecutive 512 byte logical blocks.
  
  IMPORTANT: the allocation block size is a multiple of the logical block size.
  See mfs_mdb.allocation_block_size below. Some sources indicate that 512 bytes,
  or one logical block, is the norm but I haven't seen any images like that. All
- 400KB floppy images I've seen have 1KB allocation block. Inside Macintosh
+ 400KB floppy images I've seen have 1KB allocation blocks. Inside Macintosh
  II-120 indicates that the allocation block size is chosen to make the master
  directory block and block map fit in two logical blocks, so it's likely that
  anything larger than a 400KB floppy used an allocation block size larger than
